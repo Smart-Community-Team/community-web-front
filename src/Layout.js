@@ -25,6 +25,7 @@ function Layout() {
         </TabPane>
         <TabPane tab="风力" key="5">
           Content of Tab 3
+          <TheNightingaleChart></TheNightingaleChart>
         </TabPane>
       </Tabs>
     </div>
