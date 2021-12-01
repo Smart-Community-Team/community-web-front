@@ -1,6 +1,5 @@
 @import '~antd/dist/antd.css';
 @import '@/views/wind/style.css';
-@import '@/views/overview/style.css';
 
 .App {
   text-align: center;

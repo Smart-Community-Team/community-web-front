@@ -1,4 +1,5 @@
 import React from "react"
+import './style.less'
 
 class SingleOverview extends React.Component {
   constructor(props){
