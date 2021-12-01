@@ -9,12 +9,12 @@ class SingleOverview extends React.Component {
   render() {
     return (
       <div className="single-overview">
-        <div>当前温度：</div>
-        <div>当前湿度：</div>
-        <div>当前风向：</div>
-        <div>当前风力：</div>
-        <div>当前PM2.5浓度：</div>
-        <div>当前噪音：</div>
+        <div className="card">温度：</div>
+        <div className="card">湿度：</div>
+        <div className="card">风向：</div>
+        <div className="card">风力：</div>
+        <div className="card">PM2.5浓度：</div>
+        <div className="card">噪音：</div>
       </div>
     )
   }

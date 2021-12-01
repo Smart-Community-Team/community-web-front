@@ -64,8 +64,8 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-const lessRegex = /\.less/; // added by cherrykkk at 2021/12/2
-const lessModuleRegex = /\.module\.less/; // added by cherrykkk at 2021/12/2
+const lessRegex = /\.less$/; // added by cherrykkk at 2021/12/2
+const lessModuleRegex = /\.module\.less$/; // added by cherrykkk at 2021/12/2
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -542,13 +542,16 @@ module.exports = function (webpackEnv) {
             // able to support less
             {
               test: lessRegex,
-              exclude: lessModuleRegex,
-              use: getStyleLoaders({
-                importLoaders: 1,
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
-              }),
+              exclude: lessModuleRegex, 
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
+                },
+                'less-loader'
+              ),
               sideEffects: true,
             },{
               test: lessModuleRegex,
