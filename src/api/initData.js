@@ -71,7 +71,7 @@ let temperatureData = [
   }
 ]
 
-fetch("/showdata?type=temperature&areas=阳光帝景&startTime=2021-1-12%200:0:0&endTime=2021-1-13%2023:59:59&timeGap=hour").then(res=>res.json()).then(data=>console.log(data))
+//fetch("/showdata?type=temperature&areas=阳光帝景&startTime=2021-1-12%200:0:0&endTime=2021-1-13%2023:59:59&timeGap=hour").then(res=>res.json()).then(data=>console.log(data))
 
 let temperatureDataNew = [
   {

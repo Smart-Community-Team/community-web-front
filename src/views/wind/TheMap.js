@@ -1,9 +1,9 @@
 // import BMap  from 'BMap';
 import React from "react";
 import TheSelect from "@/component/TheSelect.js";
-import ICON from '@/assets/arrow.svg'
+//import {ArrowRightOutlined} from '@ant-design/icons-svg'
+import ICON from '@/assets/arrow2.svg'
 import {areaData} from '@/api/index.js'
-
 let bmapData = {}
 
 function setDirectionInMap(mapHandle,currentDirection) {
@@ -71,6 +71,7 @@ class TheMap extends React.Component {
       <div className="the-map-container">
         <div className="the-map" ref={this.chartDom}>
         </div>
+        <div>控制台</div>
         当前定位 <TheSelect defaultValue="阳光帝景" handleChange={this.relocation}></TheSelect>
       </div>
     )

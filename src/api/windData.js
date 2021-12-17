@@ -99,4 +99,22 @@ let windDirectionData = [
   }
 ]
 
+//fetch("http://120.55.86.4:8085/showdata").then().then()
+
+let startTime = new Date('2021-02-01T09:59:33.000+00:00')
+console.log(startTime)
+
+fetch("/showdata?type=windDirection&areas=江北顶山街道,大新华府南区,大新华府北区,阳光帝景")
+.then(res=>res.json())
+.then(res=>{
+  console.log("风向数据已获取",res.data)
+  for(const e of res.data) {
+    windDirectionData.find((item)=>{
+      return item.area === e.area
+    }).hours = e.detailDatas
+  }
+  // console.log(res.data[1].detailDatas[0].date)
+  // let date = new Date(res.data[1].detailDatas[0].date)
+  // console.log(date)
+})
 export {windDirectionData}

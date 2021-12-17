@@ -28,11 +28,6 @@
   }
 }
 
-.layout-tab-pane {
-  position: relative;
-  display: flex;
-  height: 100%;
-}
 .the-chart-container {
   width: 500px;
   height: 400px;
@@ -57,8 +52,3 @@
   right: 10px;
 }
 
-.layout-tabs {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-}

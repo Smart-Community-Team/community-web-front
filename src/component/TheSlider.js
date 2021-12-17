@@ -13,6 +13,20 @@ class TheSlider extends React.Component {
     this.props.handleChange(value)
   };
 
+  auto = ()=>{
+    setInterval(()=>{
+      const newValue = (this.state.inputValue)%24+1
+      this.setState({
+        inputValue: newValue,
+      });
+      this.props.handleChange(newValue)
+    },1000)
+  }
+
+  componentDidMount(){
+    this.auto()
+  }
+
   render() {
     const { inputValue } = this.state;
     return (
