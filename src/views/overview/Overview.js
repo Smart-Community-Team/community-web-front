@@ -3,16 +3,26 @@ import React from "react"
 // import TheClock from "@/component/TheClock.js";
 import SingleOverview from "./SingleOverview.js";
 import './style.less'
-import { current } from '@/api/index.js'
+import { current,currentTime,getCurrentTime } from '@/api/index.js'
 
 class Overview extends React.Component {
   constructor(props){
     super(props)
     this.chart = React.createRef();
     this.state = {
-      data: []
+      data: [],
+      currentTime: null
     }
     this.init()
+  }
+
+  componentDidMount(){
+    setInterval(()=>{
+      getCurrentTime()
+      this.setState({
+        currentTime: currentTime
+      })
+    },1000)
   }
 
   init = ()=>{
@@ -27,15 +37,19 @@ class Overview extends React.Component {
 
   render() {
     const { data } = this.state
+    const { currentTime } = this.state
     return (
       <div className="overview">
-        {/* <TheClock></TheClock>
-        <TheTemperatureGaugeChart ref={this.chart} data={this.props.data}></TheTemperatureGaugeChart> */}
-        <SingleOverview data={data[0]}></SingleOverview>
-        <SingleOverview data={data[1]}></SingleOverview>
-        <SingleOverview data={data[2]}></SingleOverview>
-        <SingleOverview data={data[3]}></SingleOverview>
-        <div>2021/12/2 19:58:02</div>
+        <div className="head-bar">
+          智慧社区数据监控平台 
+          <div className="time-bar">{currentTime}</div>
+        </div>
+        <div className="data-monitor">
+          <SingleOverview data={data[0]}></SingleOverview>
+          <SingleOverview data={data[1]}></SingleOverview>
+          <SingleOverview data={data[2]}></SingleOverview>
+          <SingleOverview data={data[3]}></SingleOverview>
+        </div>
       </div>
     )
   }

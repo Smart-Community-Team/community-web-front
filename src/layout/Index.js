@@ -1,12 +1,10 @@
 import React from "react"
 import { Tabs } from 'antd'
-import TheNightingaleChart from "../component/TheNightingaleChart.js"
 import WindView from "../views/wind/WindView.js" 
 import TemperatureView from '../views/TemperatureView.js';
+import Pm25View from '../views/pm25/Pm25View.js'
 import Overview from "../views/overview/Overview.js";
-import NoiseView from "../views/NoiseView.js";
-import TheSelect from "../component/TheSelect.js"
-import {temperatureDataNew,noiseData} from "@/api/index.js"
+import NoiseView from "../views/noise/NoiseView.js";
 import './style.less'
 const { TabPane } = Tabs;
 
@@ -18,13 +16,6 @@ class Layout extends React.Component {
     }
   }
 
-  changeArea = (area)=>{
-    console.log("全局选择",area)
-    this.setState({
-      currentArea: area
-    })
-  }
-
   render() {
     const {currentArea} = this.state
     return (
@@ -33,27 +24,16 @@ class Layout extends React.Component {
           <TabPane tab="此刻 · 概览" key="1">
             <Overview></Overview>
           </TabPane>
-          <TabPane tab="噪音" key="2">
-            <NoiseView data={noiseData} currentArea={currentArea}></NoiseView>
+          <TabPane tab="风向/风力" key="2">
+            <WindView></WindView>
           </TabPane>
-          <TabPane tab="风向/风力" key="3">
-            <WindView currentArea={currentArea} ></WindView>
+          <TabPane tab="噪音" key="3">
+            <NoiseView></NoiseView>
           </TabPane>
-          <TabPane tab="温度" key="4">
-            <TemperatureView data={temperatureDataNew} currentArea={currentArea}></TemperatureView>
-          </TabPane>
-          <TabPane tab="湿度" key="5">
-            Content of Tab 3
-            <TheNightingaleChart></TheNightingaleChart>
-          </TabPane>
-          <TabPane tab="。。。" key="6">
-            Content of Tab 3
-            <TheNightingaleChart></TheNightingaleChart>
+          <TabPane tab="PM2.5" key="4">
+            <Pm25View></Pm25View>
           </TabPane>
         </Tabs>
-        <div className="global-the-select">
-          <TheSelect defaultValue="阳光帝景" handleChange={this.changeArea}></TheSelect>
-        </div>
       </div>
     )
   }

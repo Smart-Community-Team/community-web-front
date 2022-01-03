@@ -137,5 +137,15 @@ let areaData = [
   }
 ]
 
+let currentTime = null
 
-export {temperatureData,temperatureDataNew,noiseData,areaData}
+const getCurrentTime = ()=>{
+  fetch("http://120.55.86.4:8085/returncurtime")
+  .then(res=>res.json())
+  .then(res=>{
+    const d = new Date(res.data)
+    currentTime = `${d.getFullYear()}-${Number(d.getMonth()+1)}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} `
+  })
+}
+
+export {temperatureData,temperatureDataNew,noiseData,areaData,currentTime,getCurrentTime}

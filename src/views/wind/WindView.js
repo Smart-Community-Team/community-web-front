@@ -1,41 +1,88 @@
 import React from "react"
-import TheMap from "./TheMap.js"
-import TheSlider from "../../component/TheSlider.js"
-import {windDirectionData} from "../../api/index.js"
+import { Slider } from 'antd';
+import { areaData } from '@/api/index.js'
+import { Radio } from 'antd';
+import { getCurrentDirection } from './getCurrentDirection'
+import { setDirectionInMap,initMap } from './mapFunction'
+import './style.less';
 
-
-function getCurrentDirection(currentHour) {
-  const currentDirection = {}
-  for(let e of windDirectionData){
-    const item = e.hours.find((item)=>{
-      return item.hour === currentHour
-    })
-    currentDirection[e.area] = item
-  }
-  return currentDirection
-}
+let bmapData = {}
 
 class WindView extends React.Component {
-  state = {
-    currentDirection: null,
+  constructor() {
+    super()
+    this.chartDom = React.createRef();
+    this.map = null
+    this.state = {
+      currentTime: 2
+    }
   }
-
-  handleChange = (value)=>{
+  componentDidMount() {
+    const { mapHandle } = initMap(this.chartDom.current,"阳光帝景",bmapData)
+    this.map = mapHandle
+    setInterval(() => {
+      this.setState({
+        currentTime: this.state.currentTime%24 + 1
+      })
+    }, 1000);
+  }
+  relocation= (event)=> {
+    const value = event.target.value
+    this.map.centerAndZoom(bmapData[value].point,18);
+  }
+  changeSlider = (value) => {
     this.setState({
-      currentDirection: getCurrentDirection(value),
+      currentTime: value
     })
   }
-  componentDidMount(){
-    this.handleChange(15)
+  renderData = (areaName,currentPower,currentDirection)=>{
+    console.log(currentPower[areaName])
+    if(currentPower[areaName])
+      return (
+        <div className="single-card">
+          <div className="area-name">{areaName}</div> 
+          <div className="data-content">
+            风力：{currentPower[areaName].value.toFixed(0)}  &nbsp;
+            风向：{currentDirection[areaName].value.toFixed(0)}°
+          </div>
+        </div>
+      )
+    else {
+      return (
+        <div className="single-card">
+          <div className="area-name">{areaName}</div> 
+          <div className="data-content">暂无数据</div>
+        </div>
+      )
+    }
   }
   render() {
-    const {currentDirection} = this.state
-    const defaultHour = 15
+    const { currentTime } = this.state
+    const { currentDirection,currentPower } = getCurrentDirection(currentTime)
+    console.log(currentPower)
+    if(this.map)
+      setDirectionInMap(this.map,currentDirection,currentPower,bmapData)
     return (
-      <>
-        <TheMap currentDirection={currentDirection}></TheMap>
-        <TheSlider defaultValue={defaultHour} handleChange={this.handleChange}></TheSlider>
-      </>
+      <div className="wind-view">
+        <div className="head-bar">风 力 风 向 展 示 台</div>
+        <div className="wind-map" ref={this.chartDom}></div>
+        <Radio.Group size="small" style={{ marginTop: 16 }}  defaultValue="阳光帝景" onChange={this.relocation}>
+          {areaData.map(item=>(
+            <Radio.Button  value={item.areaName} key={item.id}>{item.areaName}</Radio.Button>
+          ))}
+        </Radio.Group>
+        <Slider
+          min={1} max={24} value={currentTime}
+          onChange={this.changeSlider}
+        />
+        <div>{currentTime}时</div>
+        <div className="current-data">
+          {this.renderData("江北顶山街道",currentPower,currentDirection)}<br/>
+          {this.renderData("阳光帝景",currentPower,currentDirection)}
+          {this.renderData("大新华府南区",currentPower,currentDirection)}<br/>
+          {this.renderData("大新华府北区",currentPower,currentDirection)}
+        </div>
+      </div>
     )
   }
 }

@@ -1,18 +1,21 @@
-// import BMap  from 'BMap';
-import React from "react";
-import TheSelect from "@/component/TheSelect.js";
-//import {ArrowRightOutlined} from '@ant-design/icons-svg'
+
 import ICON from '@/assets/arrow2.svg'
 import {areaData} from '@/api/index.js'
-let bmapData = {}
 
-function setDirectionInMap(mapHandle,currentDirection) {
+export function setDirectionInMap(mapHandle,currentDirection,currentPower,bmapData) {
   if(currentDirection==null)
     return 
   const { BMap } = window
-  let size = new BMap.Size(128,128)
-  let icon = new BMap.Icon(ICON,size)
+  const size = new BMap.Size(128,128)
+  const icon = new BMap.Icon(ICON, size)
   for(let e of areaData) {
+    if(currentPower[e.areaName]) {
+      const power = currentPower[e.areaName].value
+      const theSize = new BMap.Size(128*power,128*power)
+      icon.setSize(theSize)
+      icon.setImageSize(theSize)
+      icon.setAnchor( new BMap.Size(64*power,64*power) )
+    }
     if(currentDirection[e.areaName]){
       const point = bmapData[e.areaName].point
       let marker = new BMap.Marker(point,{
@@ -31,8 +34,9 @@ function setDirectionInMap(mapHandle,currentDirection) {
   }
 }
 
-function initMap(mapDom,defaultArea) {
+export function initMap(mapDom,defaultArea,bmapData) {
   const { BMap } = window
+  if( !BMap ) return  //BMap数据需要通过网络请求异步获取，需要兼容还未取到的状态
   let mapHandle =  new BMap.Map(mapDom); // 创建Map实例
   mapHandle.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
   for(let e of areaData) {
@@ -49,32 +53,3 @@ function initMap(mapDom,defaultArea) {
     mapHandle
   }
 }
-
-
-
-class TheMap extends React.Component {
-  constructor() {
-    super()
-    this.chartDom = React.createRef();
-    this.map = null
-  }
-  componentDidMount() {
-    const { mapHandle } = initMap(this.chartDom.current,"阳光帝景")
-    this.map = mapHandle
-  }
-  relocation= (value)=> {
-    this.map.centerAndZoom(bmapData[value].point,18);
-  }
-  render() {
-    setDirectionInMap(this.map,this.props.currentDirection)
-    return (
-      <div className="the-map-container">
-        <div className="the-map" ref={this.chartDom}>
-        </div>
-        <div>控制台</div>
-        当前定位 <TheSelect defaultValue="阳光帝景" handleChange={this.relocation}></TheSelect>
-      </div>
-    )
-  }
-}
-export default TheMap

@@ -1,7 +1,8 @@
 import React from "react"
-import TheLineChart from "../component/TheLineChart.js"
+import TheLineChart from "./TheLineChart.js"
+import "./style.less"
 
-class NoiseView extends React.Component {
+class TemperatureView extends React.Component {
   constructor(props){
     super(props)
     this.chart = React.createRef();
@@ -11,11 +12,12 @@ class NoiseView extends React.Component {
       this.chart.current.changeArea(this.props.currentArea)
     }
     return (
-      <>
+      <div className="pm25-view">
+        <div className="head-bar">PM2.5 走 势 预 测 示 意 图</div>
         <TheLineChart ref={this.chart} data={this.props.data}></TheLineChart>
-      </>
+      </div>
     )
   }
 }
 
-export default NoiseView
+export default TemperatureView

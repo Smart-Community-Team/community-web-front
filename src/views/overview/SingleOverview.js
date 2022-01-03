@@ -1,15 +1,57 @@
 import React from "react"
 import { FullscreenExitOutlined } from '@ant-design/icons'
 import './style.less'
+import icon_temperature from '@/assets/icon_temperature.svg'
+import icon_windPower from '@/assets/icon_windPower.svg'
+import icon_windDirection from '@/assets/icon_windDirection.svg'
+import icon_humidity from '@/assets/icon_humidity.svg'
+import icon_pm25 from '@/assets/icon_pm25.svg'
+import icon_pm10 from '@/assets/icon_pm10.svg'
+import icon_noise from '@/assets/icon_noise.svg'
+import icon_airPressure from '@/assets/icon_airPressure.svg'
 
 const showingList = [
-  ["温度", "temperature", "°C"],
-  ["湿度", "humidity", "%RH"],
-  ["风向", "windDirection","°"],
-  ["风力", "windPower", "级"],
-  ["PM2.5浓度", "pm25", "ug/m³"],
-  ["噪音", "noise", "db"],
-  ["气压", "airPressure", "hPa"]
+  {
+    icon: icon_temperature,
+    title: "温度",
+    titleEn: "temperature",
+    unit: "°C"    
+  },{
+    icon: icon_humidity,
+    title: "湿度",
+    titleEn: "humidity",
+    unit: "%RH"    
+  },{
+    icon: icon_windDirection,
+    title: "风向",
+    titleEn: "windDirection",
+    unit: "°"    
+  },{
+    icon: icon_windPower,
+    title: "风力",
+    titleEn: "windPower",
+    unit: "级"    
+  },{
+    icon: icon_pm25,
+    title: "PM2.5",
+    titleEn: "pm25",
+    unit: "ug/m³"    
+  },{
+    icon: icon_pm10,
+    title: "PM10",
+    titleEn: "pm10",
+    unit: "ug/m³"    
+  },{
+    icon: icon_noise,
+    title: "噪音",
+    titleEn: "noise",
+    unit: "db"    
+  },{
+    icon: icon_airPressure,
+    title: "气压",
+    titleEn: "airPressure",
+    unit: "hPa"    
+  }
 ]
 
 class SingleOverview extends React.Component {
@@ -33,16 +75,20 @@ class SingleOverview extends React.Component {
     const list = showingList
     return (
       <>
-        {
-          list.map((item,index)=>{
-            return (
-              <div className="card" key={index}>{item[0]}
-                <div className="number">{data[item[1]]}</div>
-                <div>{item[2]}</div>
-              </div>
-            )
-          })
-        }
+        <div className="title-panel">{data.areaName}</div>
+        <div className="data-panel">
+          {
+            list.map((item,index)=>{
+              return (
+                <div className="card" key={index}>
+                  <div className="icon"><img src={item.icon} /></div>
+                  <div className="title">{item.title}</div>
+                  <div className="number">{data[item.titleEn]} {item.unit}</div>
+                </div>
+              )
+            })
+          }
+        </div>
       </>
     )
   }
@@ -50,13 +96,15 @@ class SingleOverview extends React.Component {
   render() {
     const { fullScreen } = this.state
     const content = this.getContent()
+    const data = dataParse(this.props.data)
     return (
       <>
         <div className="single-overview" onClick={()=>this.fullScreen(true)}>
-        {content}
+          {content}
         </div>
         <div className={`${fullScreen?"single-overview-full-screen":"unshow"} single-overview`}>
-        {content}
+          {/* <SingleOverviewFullScreen data={data}></SingleOverviewFullScreen> */}
+          {content}
           <FullscreenExitOutlined className={fullScreen?"show":"unshow"} onClick={()=>this.fullScreen(false)}  />
         </div>
       </>
