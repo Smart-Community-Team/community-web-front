@@ -1,6 +1,4 @@
 import React from "react"
-// import TheTemperatureGaugeChart from "../../component/TheTemperatureGaugeChart.js"
-// import TheClock from "@/component/TheClock.js";
 import SingleOverview from "./SingleOverview.js";
 import './style.less'
 import { current,currentTime,getCurrentTime } from '@/api/index.js'

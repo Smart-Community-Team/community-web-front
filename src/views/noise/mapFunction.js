@@ -1,18 +1,10 @@
 
 import {areaData} from '@/api/index.js'
 
-const testCurrentNoise = {
-  "江北顶山街道": 80,
-  "阳光帝景": 60,
-  "大新华府北区": 90,
-  "大新华府南区": 100
-}
-
 const SIZE = 50
 const traceName = "噪音溯源坐标"
 
 export function setCircleInMap(mapHandle,currentTrace,bmapData) {
-  //currentTrace = testCurrentNoise //测试阶段，中转一次。
   if(currentTrace==null)
     return 
   const { BMap } = window

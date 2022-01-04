@@ -1,7 +1,6 @@
 import React from "react"
 import { Tabs } from 'antd'
 import WindView from "../views/wind/WindView.js" 
-import TemperatureView from '../views/TemperatureView.js';
 import Pm25View from '../views/pm25/Pm25View.js'
 import Overview from "../views/overview/Overview.js";
 import NoiseView from "../views/noise/NoiseView.js";
