@@ -103,7 +103,6 @@ class SingleOverview extends React.Component {
           {content}
         </div>
         <div className={`${fullScreen?"single-overview-full-screen":"unshow"} single-overview`}>
-          {/* <SingleOverviewFullScreen data={data}></SingleOverviewFullScreen> */}
           {content}
           <FullscreenExitOutlined className={fullScreen?"show":"unshow"} onClick={()=>this.fullScreen(false)}  />
         </div>
